@@ -22,14 +22,14 @@ export interface Resultat {
  * Modèle complet d'une recette récupérée depuis le Backend (Lecture seule).
  */
 export interface Recette {
-  id: number;
-  titre: string;
-  description: string;
-  surgraissage: number;
-  apportEnEau: number;
-  avecSoude: boolean;
-  concentrationAlcali: number;
-  qteAlcali: number;
-  ligneIngredients: LigneIngredient[];
-  resultats: Resultat[];
+id: number;
+titre: string;
+description: string;
+surgraissage: number;
+apportEnEau: number;
+avecSoude: boolean;
+concentrationAlcalin: number; // Rajouter un 'n' à la fin
+qteAlcalin: number; // Rajouter un 'n' à la fin
+ligneIngredients: LigneIngredient[];
+resultats: Resultat[];
 }
