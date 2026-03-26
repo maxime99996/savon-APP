@@ -1,11 +1,28 @@
-<div class="container">
+<div class="container mt-4">
     <div class="row">
         @for (recette of recettes; track recette.id) {
         <div class="col-md-4 mb-4">
-            <div class="card h-100 shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title text-primary">{{ recette.titre }}</h5>
+            <div class="card shadow-sm h-100 border-success-subtle">
+                <div class="card-header bg-success text-white">
+                    <h5 class="card-title mb-0">{{ recette.titre }}</h5>
                     <p class="card-text text-truncate">{{ recette.description }}</p>
+                </div>
+                <div class="card-body">
+                    <!-- <p class="text-muted small">Créée le : {{recette.dateCreation | date:'dd/MM/yyyy' }}</p> -->
+                    <ul class="list-group list-group-flush mb-3">
+                        <li class="list-group-item d-flex justify-content-between">{{
+                            recette.resultats[0].caracteristique.nom }}
+                            <strong>{{ recette.resultats[0].score.toFixed(1) }}
+                            </strong>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">{{
+                            recette.resultats[1].caracteristique.nom}}
+                            <strong>{{ recette.resultats[1].score.toFixed(1) }}
+                            </strong>
+                        </li>
+                    </ul>
+
+
                     <ul class="list-group list-group-flush mb-3">
                         <li class="list-group-item d-flex justify-content-between">
                             <span>Surgraissage :</span>
@@ -24,6 +41,13 @@
                             <span class="fw-bold">{{ recette.apportEnEau }} g</span>
                         </li>
                     </ul>
+
+                    <!-- Affichage du graphe radar : -->
+                    <div class="chart-container mb-3" style="position: relative; height:400px;">
+                        <canvas [id]="'chart-' + recette.id"></canvas>
+                    </div>
+                    
+                <div class="card-footer">
                     <div class="d-flex justify-content-between mt-auto">
                         <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
                             data-bs-target="#modalDetails" (click)="ouvrirModale(recette)">
@@ -36,11 +60,12 @@
                 </div>
             </div>
         </div>
-        }
     </div>
-    <!-- PROCHAINE ETAPE : AJOUT DU CODE DU MODAL BOOSTRAP -->
-    <!-- Le code sera placé ici ... -->
+    } @empty {
+    <div class="alert alert-info">Aucune recette trouvée.</div>
+    }
 </div>
+
 <!-- Code du modal : -->
 <div class="modal fade" id="modalDetails" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -61,7 +86,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @for (ligne of recetteSelectionnee.ligneIngredients; track $index) {
+                        @for (ligne of recetteSelectionnee.ligneIngredients; track
+                        $index) {
                         <tr>
                             <td>{{ ligne.ingredient.nom }}</td>
                             <td class="text-end">{{ ligne.quantite }} g</td>
@@ -71,13 +97,15 @@
                     </tbody>
                 </table>
                 <div class="alert alert-secondary d-flex justify-content-around">
-                    <span><strong>Eau :</strong> {{ recetteSelectionnee.apportEnEau }} g</span>
+                    <span><strong>Eau :</strong> {{
+                        recetteSelectionnee.apportEnEau }} g</span>
                     <span><strong>{{ recetteSelectionnee.avecSoude ? 'Soude' : 'Potasse' }} :</strong>
                         {{ recetteSelectionnee.qteAlcalin }} g</span>
                 </div>
                 <h6>Scores de qualité</h6>
                 <div class="row">
-                    @for (res of recetteSelectionnee?.resultats; track res.caracteristique.id) {
+                    @for (res of recetteSelectionnee?.resultats; track
+                    res.caracteristique.id) {
                     <div class="col-md-6 mb-2">
                         <small>{{ res.caracteristique.nom }} : {{ res.score }}
                         </small>
@@ -94,4 +122,9 @@
             }
         </div>
     </div>
+
+
 </div>
+
+</div>
+<p>recipe-manager-page marche youpi </p>
