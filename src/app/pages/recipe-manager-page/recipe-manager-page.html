@@ -86,8 +86,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @for (ligne of recetteSelectionnee.ligneIngredients; track
-                        $index) {
+                        @for (ligne of recetteSelectionnee.ligneIngredients; track $index) {
                         <tr>
                             <td>{{ ligne.ingredient.nom }}</td>
                             <td class="text-end">{{ ligne.quantite }} g</td>
@@ -104,8 +103,7 @@
                 </div>
                 <h6>Scores de qualité</h6>
                 <div class="row">
-                    @for (res of recetteSelectionnee?.resultats; track
-                    res.caracteristique.id) {
+                    @for (res of recetteSelectionnee?.resultats; track res.caracteristique.id) {
                     <div class="col-md-6 mb-2">
                         <small>{{ res.caracteristique.nom }} : {{ res.score }}
                         </small>
