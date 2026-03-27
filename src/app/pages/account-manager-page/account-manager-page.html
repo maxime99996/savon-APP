@@ -1,1 +1,52 @@
-<p>account-manager-page works!</p>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow-sm">
+        <div class="card-header">
+          <h4 class="mb-0">Mon compte</h4>
+        </div>
+        <div class="card-body">
+ 
+          <!-- Identifiant -->
+          <div class="mb-4">
+            <label class="text-muted small fw-semibold text-uppercase">Identifiant</label>
+            <p class="fs-5 fw-bold mb-0">{{ authService.getUserIdentifier() }}</p>
+          </div>
+ 
+          <!-- Rôles -->
+          <div class="mb-4">
+            <label class="text-muted small fw-semibold text-uppercase">Rôles</label>
+            <div class="mt-1">
+              @for (role of authService.getRoles(); track role) {
+                @if (role === 'ROLE_ADMIN') {
+                  <span class="badge bg-danger me-1">{{ role }}</span>
+                } @else {
+                  <span class="badge bg-primary me-1">{{ role }}</span>
+                }
+              }
+            </div>
+          </div>
+ 
+          <!-- Date d'expiration -->
+          <div class="mb-4">
+            <label class="text-muted small fw-semibold text-uppercase">Fin de session</label>
+            <p class="mb-0">
+              @if (authService.getExpirationDate()) {
+                {{ authService.getExpirationDate() | date:'dd/MM/yyyy à HH:mm:ss' }}
+              } @else {
+                <span class="text-danger">Non disponible</span>
+              }
+            </p>
+          </div>
+ 
+          <!-- Bouton déconnexion -->
+          <hr>
+          <button class="btn btn-danger w-100" (click)="authService.logout()">
+            Se déconnecter
+          </button>
+ 
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
